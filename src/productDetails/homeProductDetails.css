@@ -1,0 +1,174 @@
+/* Container for product details */
+.product-details {
+  width: 90%;
+  max-width: 800px;
+  margin: 30px auto;
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+/* Wrapper for slideshow + calculator */
+.slideshow-calculator {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+/* Slideshow container */
+.slideshow {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  height: 220px; /* Fixed height */
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  flex: 1 1 400px;
+}
+
+/* Individual slide */
+.slide {
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.5s ease-in-out;
+  cursor: pointer;
+}
+
+.slide.active {
+  opacity: 1;
+  position: relative;
+}
+
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Prev/Next buttons on slideshow */
+.prev, .next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0,0,0,0.5);
+  color: #fff;
+  border: none;
+  font-size: 1.5rem;
+  padding: 4px 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  user-select: none;
+  z-index: 10;
+}
+
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.7);
+}
+
+.prev { left: 10px; }
+.next { right: 10px; }
+
+/* Info container */
+.info {
+  margin-top: 24px;
+  padding: 20px 22px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  line-height: 1.6;
+}
+
+/* Title */
+.info h2 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #111;
+}
+
+/* Meta lines */
+.info span {
+  display: block;
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 6px;
+}
+
+/* Highlight price line */
+.info span:nth-of-type(2) {
+  font-weight: 600;
+  color: #0a7cff;
+}
+
+/* Description text (more_details) */
+.info span:last-child {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #666;
+}
+
+/* Optional: subtle divider */
+.info::after {
+  content: "";
+  display: block;
+  height: 1px;
+  background: #eee;
+  margin-top: 14px;
+}
+
+/* Info section */
+.calculatur {
+  padding: 15px;
+  background-color: #fafafa;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+}
+
+/* Modal overlay */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.7); /* Transparent black */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+/* Modal image */
+.modal-img {
+  width: 74%;
+  height: 90%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 8px;
+  /* object-fit: contain; */
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+}
+
+/* Modal navigation buttons */
+.modal-prev, .modal-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0,0,0,0.5);
+  color: white;
+  border: none;
+  font-size: 2rem;
+  padding: 10px 15px;
+  border-radius: 50%;
+  cursor: pointer;
+  user-select: none;
+}
+
+.modal-prev { left: 30px; }
+.modal-next { right: 30px; }
+
+.modal-prev:hover, .modal-next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
