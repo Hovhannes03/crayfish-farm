@@ -1,16 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import "./homepage.css";
 import { useEffect, useState } from "react"
-import api from "../api/api";
+import productsAPI from "../api/api";
 
 export default function Home({search}) {
-  const [products, setProducts] = useState([])
+  const [products, setProducts] = useState(productsAPI)
   let navigate = useNavigate();
-
-  useEffect(() => {
-    api.get("/products")
-      .then(res => setProducts(res.data))
-  }, [])
 
   let searchProducts = products.filter((prod) => 
     prod.title.toLowerCase().includes((search || "").toLowerCase())
