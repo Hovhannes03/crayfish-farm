@@ -48,7 +48,7 @@ export default function HomeProductDetails() {
               key={index}
               onClick={() => setModalOpen(true)} // open modal on click
             >
-              {index === current && <img src={slide} alt={`Slide ${index}`} />}
+              {index === current && <img src={`/crayfish-farm${slide}`} alt={`Slide ${index}`} />}
             </div>
           ))}
         </div>

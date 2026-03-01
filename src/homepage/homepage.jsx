@@ -19,7 +19,7 @@ export default function Home({search}) {
           className="top-card"
           onClick={() => navigate(`/products/${item.id}`, { state: item })} 
         > 
-            <img src={item.images[0]} alt="img to crayfish" className="cardimg" />
+            <img src={`/crayfish-farm${item.images[0]}`} alt="img to crayfish" className="cardimg" />
             <h2 className="top-name">{item.title} - {item.pricePerKg}$</h2>
             <p className="top-text">Lorem  Iusto earum architecto doloribus quaerat veniam exercitationem.</p>
         </div>
