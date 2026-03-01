@@ -5,7 +5,7 @@ import "./header.css";
 import { useRef, useState } from "react";
 
 
-export default function SearchBox({setSearch}){
+export default function SearchBox({setSearch, setOpen, open}){
     const inputRef = useRef(null);
     let [inputValue, setInputValue] = useState("");
 
@@ -24,12 +24,14 @@ export default function SearchBox({setSearch}){
             <div className="shopper">
                 <a href="#" className="shoper"><p className="shop">Cray</p>Fish</a>
             </div>
+
             <div className="search-box">
                 <form onSubmit={handleSubmit}>
                     <input 
                         ref={inputRef}
                         type="text" 
                         className="searchInp"
+                        placeholder="Search Order"
                         value={inputValue}
                         onChange={(e) => setInputValue(e.target.value)}
                     />
@@ -43,6 +45,7 @@ export default function SearchBox({setSearch}){
                     </button>
                 </form>
             </div>
+            
             <div className="additem-logn">
                 <div className="items">
                     <img src={itemsIcon} alt="itemsIcon" />Items Added
@@ -51,7 +54,9 @@ export default function SearchBox({setSearch}){
                     <img src={userIcon} alt="userIcon" /> Login or Sign Up
                 </div>
             </div>
-            
+            <div className="burger" onClick={() => setOpen(!open)}>
+                ☰
+            </div>
         </div>
     )
 }

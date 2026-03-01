@@ -1,7 +1,6 @@
 .header{
     width: 100%;
     height: 180px;
-    /* border: 1px solid; */
 }
 
 .searchBox{
@@ -10,7 +9,6 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    /* border: 1px solid; */
 }
 
 .shop{
@@ -22,7 +20,7 @@
     font-family: Montserrat;
     font-weight: 400;
     font-style: italic;
-    font-size: 48px;
+    font-size: 4vw;
     line-height: 100%;
     cursor: pointer;
 }
@@ -46,25 +44,36 @@ a:active {
 
 form{
     width: max-content;
-    /* height: 200px; */
     display: flex;
     justify-content: center;
     box-shadow: 0 4px 20px rgba(52, 152, 219, 0.6);
+    border-radius: 8px;
 }
 
 .searchInp{
-    width: 250px;
+    width: 16vw;
+    height: 30px;
+    font-family: sans-serif;
+    font-size: 16px;
+    border-radius: 8px 0 0 8px;
+    border: 1px solid #3a89ff;
+    padding-left: 6px;
+}
+
+.searchInp:focus{
+    outline: none;
+    border: 1px solid #3a89ff;
+    caret-color: #3a89ff;
 }
 
 .search-btn{
     all: unset;
     background-color: #3a89ff;
     width: 35px;
-    height: 35px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 5px;
+    border-radius: 0 8px 8px 0;
 }
 
 .search-btn:active{
@@ -72,9 +81,9 @@ form{
 }
 
 .additem-logn{
-    width: 376px;
+    width: 46%;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
 }
 
 .items{
@@ -122,4 +131,100 @@ nav{
     color: white;
     font-family: sans-serif;
     font-size: 18px;
+}
+
+nav ul{
+    display: contents;
+}
+
+.burger{
+    display: none;
+    font-size: 24px;
+    color: #3a89ff;
+    cursor: pointer;
+
+}
+
+@media (max-width: 768px) {
+    .searchInp {
+        width: 100px;
+        height: 24px;
+    }
+
+    .search-btn{
+        width: 24px;
+    }
+
+    .additem-logn{
+        justify-content: space-around;
+    }
+
+    .items, .login{
+        height: 26px;
+        font-size: 14px;
+    }
+    .items{
+        width: 120px;
+    }
+    
+    .itemsIcon, .userIcon{
+        width: 12px;
+    }
+}
+
+@media (max-width: 576px) {
+  
+    .header{
+        width: 100%;
+        height: 108px;
+    }
+
+    .additem-logn{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+
+  .items, .login{
+    width: 120px;
+    height: 26px;
+    font-size: 10px;
+  }
+  .itemsIcon, .userIcon{
+    width: 10px;
+  }
+
+  .burger{
+    display: block;
+    z-index: 3;
+  }
+
+  .activve{
+    position: absolute;
+    top: 0px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    display: flex;
+  }
+
+  nav ul {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+  }
+
+  nav{
+    display: none;
+  }
+
+  .nav{
+    height: 2px;
+  }
+  /* .nav.active {
+    display: block;
+  } */
 }

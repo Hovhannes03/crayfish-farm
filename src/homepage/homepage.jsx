@@ -20,7 +20,7 @@ export default function Home({search}) {
           onClick={() => navigate(`/products/${item.id}`, { state: item })} 
         > 
             <img src={`/crayfish-farm${item.images[0]}`} alt="img to crayfish" className="cardimg" />
-            <h2 className="top-name">{item.title} - {item.pricePerKg}$</h2>
+            <h2 className="top-name">{item.title}  </h2>- {item.pricePerKg}$
             <p className="top-text">Lorem  Iusto earum architecto doloribus quaerat veniam exercitationem.</p>
         </div>
       ))}
