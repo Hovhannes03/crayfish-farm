@@ -7,12 +7,11 @@ import Blog from './blogpage/blogpage'
 import HomeProductDetails from './productDetails/homeProductDetails'
 
 function App() {
-    const [search, setSearch] = useState("")
-    console.log(search, "search");
+  const [search, setSearch] = useState("")
     
   return (
     <>
-      <Header setSearch={setSearch}/>
+      <Header setSearch={setSearch} search={search}/>
       <Routes>
         <Route path="/" element={<Home search={search}/>} />
         <Route path='/products/:id' element={<HomeProductDetails/>}/>

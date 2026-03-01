@@ -3,9 +3,10 @@ import itemsIcon from "../assets/icon.png";
 import userIcon from "../assets/Vector.svg"
 import "./header.css";
 import { useRef, useState } from "react";
+import { Link } from "react-router-dom";
 
 
-export default function SearchBox({setSearch, setOpen, open}){
+export default function SearchBox({search, setSearch, setOpen, open}){
     const inputRef = useRef(null);
     let [inputValue, setInputValue] = useState("");
 
@@ -19,10 +20,22 @@ export default function SearchBox({setSearch, setOpen, open}){
     setInputValue(""); 
   };
 
+    function handleLogoClick() {
+    setInputValue("");
+    setSearch("");
+    inputRef.current?.blur();
+    }
+
     return (
         <div className="searchBox">
-            <div className="shopper">
-                <a href="#" className="shoper"><p className="shop">Cray</p>Fish</a>
+            <div className="shopper" >
+                <Link
+                    to="/"
+                    className="shoper"
+                    onClick={handleLogoClick}
+                >
+                    <p className="shop">Cray</p>Fish
+                </Link>
             </div>
 
             <div className="search-box">

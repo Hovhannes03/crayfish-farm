@@ -181,50 +181,53 @@ nav ul{
 
     .additem-logn{
         display: flex;
+        width: 20%;
         flex-direction: column;
         gap: 10px;
         align-items: center;
     }
 
-  .items, .login{
-    width: 120px;
-    height: 26px;
-    font-size: 10px;
-  }
-  .itemsIcon, .userIcon{
-    width: 10px;
-  }
+    .login{
+        display: none;
+    }
 
-  .burger{
-    display: block;
-    z-index: 3;
-  }
+    .items{
+        width: 120px;
+        height: 26px;
+        font-size: 10px;
+    }
+    .itemsIcon, .userIcon{
+        width: 10px;
+    }
 
-  .activve{
-    position: absolute;
-    top: 0px;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: black;
-    display: flex;
-  }
+    .burger{
+        display: block;
+        z-index: 3;
+    }
 
-  nav ul {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 20px;
-  }
+    .activve{
+        position: absolute;
+        top: 0px;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: black;
+        z-index: 2;
+        display: flex;
+    }
 
-  nav{
-    display: none;
-  }
+    nav ul {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px;
+    }
 
-  .nav{
-    height: 2px;
-  }
-  /* .nav.active {
-    display: block;
-  } */
+    nav{
+        display: none;
+    }
+
+    .nav{
+        height: 2px;
+    }
 }
