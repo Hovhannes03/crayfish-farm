@@ -112,7 +112,7 @@ export default function HomeProductDetails() {
       {modalOpen && (
         <div className="modal" onClick={() => setModalOpen(false)}>
           <button className="modal-prev" onClick={(e)=>{e.stopPropagation(); prevSlide()}}>❮</button>
-          <img className="modal-img" src={product.images[current]} alt={`Slide ${current}`} />
+          <img className="modal-img" src={`/crayfish-farm${product.images[current]}`} alt={`Slide ${current}`} />
           <button className="modal-next" onClick={(e)=>{e.stopPropagation(); nextSlide()}}>❯</button>
         </div>
       )}
