@@ -14,9 +14,9 @@ function App() {
     <>
       <Header setSearch={setSearch}/>
       <Routes>
-        <Route path="/crayfish-farm/" element={<Home search={search}/>} />
-        <Route path='/crayfish-farm/products/:id' element={<HomeProductDetails/>}/>
-        <Route path="/crayfish-farm/blog" element={<Blog />} />
+        <Route path="/" element={<Home search={search}/>} />
+        <Route path='/products/:id' element={<HomeProductDetails/>}/>
+        <Route path="/blog" element={<Blog />} />
       </Routes>
     </>
   )
