@@ -5,6 +5,7 @@ import { Route, Router, Routes } from 'react-router-dom'
 import Home from './homepage/homepage'
 import Blog from './blogpage/blogpage'
 import HomeProductDetails from './productDetails/homeProductDetails'
+import Footer from './footer/footer'
 
 function App() {
   const [search, setSearch] = useState("")
@@ -17,6 +18,7 @@ function App() {
         <Route path='/products/:id' element={<HomeProductDetails/>}/>
         <Route path="/blog" element={<Blog />} />
       </Routes>
+      <Footer />
     </>
   )
 }

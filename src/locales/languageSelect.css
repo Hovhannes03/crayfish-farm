@@ -1,0 +1,36 @@
+.lang-select {
+  position: relative;
+  width: 80px;
+}
+
+.selected {
+  background: #fff;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 22px;
+}
+
+.dropdown {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  width: 120px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+  overflow: hidden;
+  z-index: 100;
+}
+
+.option {
+  padding: 8px 10px;
+  display: flex;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.option:hover {
+  background: #f1f5f9;
+}

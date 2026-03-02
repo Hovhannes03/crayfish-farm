@@ -4,11 +4,16 @@ import userIcon from "../assets/Vector.svg"
 import "./header.css";
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { translations } from "../locales";
+import LanguageSelect from "../locales/languageSelect";
 
 
 export default function SearchBox({search, setSearch, setOpen, open}){
     const inputRef = useRef(null);
     let [inputValue, setInputValue] = useState("");
+    const [lang, setLang] = useState("am");
+
+    const t = translations[lang];
 
     function handleClick (){
         inputRef.current.focus();
@@ -60,8 +65,9 @@ export default function SearchBox({search, setSearch, setOpen, open}){
             </div>
             
             <div className="additem-logn">
+                <LanguageSelect lang={lang} setLang={setLang}/>
                 <div className="items">
-                    <img src={itemsIcon} alt="itemsIcon" />Items Added
+                    <img src={itemsIcon} alt="itemsIcon" /> {t.itemsAdded}
                 </div>
                 <div className="login">
                     <img src={userIcon} alt="userIcon" /> Login or Sign Up

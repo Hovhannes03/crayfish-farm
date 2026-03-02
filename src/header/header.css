@@ -86,6 +86,23 @@ form{
     justify-content: space-evenly;
 }
 
+.flags {
+  display: flex;
+  gap: 10px;
+}
+
+.flags button {
+  font-size: 24px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.flags button:hover {
+  transform: scale(1.2);
+}
+
 .items{
     width: 175px;
     height: 40px;
@@ -139,7 +156,7 @@ nav ul{
 
 .burger{
     display: none;
-    font-size: 24px;
+    font-size: 30px;
     color: #3a89ff;
     cursor: pointer;
 
@@ -192,7 +209,7 @@ nav ul{
     }
 
     .items{
-        width: 120px;
+        width: 100px;
         height: 26px;
         font-size: 10px;
     }
