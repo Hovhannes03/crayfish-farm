@@ -20,6 +20,11 @@ Run the API:
 npm run server
 ```
 
+API docs:
+
+- `http://127.0.0.1:8000/docs`
+- `http://127.0.0.1:8000/openapi.json`
+
 Available endpoints:
 
 - `GET /api/health`

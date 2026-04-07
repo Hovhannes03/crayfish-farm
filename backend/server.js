@@ -1,6 +1,7 @@
 import cors from "cors";
 import express from "express";
 import sqlite3 from "sqlite3";
+import swaggerUi from "swagger-ui-express";
 import { promisify } from "node:util";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -11,6 +12,7 @@ const __dirname = path.dirname(__filename);
 const PORT = Number(process.env.PORT || 8000);
 const DB_PATH = path.join(__dirname, "crayfish_farm.db");
 const ORDER_STATUSES = new Set(["pending", "confirmed", "completed", "cancelled"]);
+const SERVER_URL = `http://127.0.0.1:${PORT}`;
 
 const sqlite = sqlite3.verbose();
 const rawDb = new sqlite.Database(DB_PATH);
@@ -255,6 +257,488 @@ async function initDatabase() {
   `);
 }
 
+const openApiDocument = {
+  openapi: "3.0.3",
+  info: {
+    title: "Crayfish Farm API",
+    version: "1.0.0",
+    description: "Node.js backend API for products, orders, and admin management.",
+  },
+  servers: [{ url: SERVER_URL }],
+  components: {
+    schemas: {
+      Product: {
+        type: "object",
+        properties: {
+          id: { type: "integer" },
+          title_am: { type: "string" },
+          desc_am: { type: "string" },
+          title_en: { type: "string" },
+          desc_en: { type: "string" },
+          title_ru: { type: "string" },
+          desc_ru: { type: "string" },
+          minWeight: { type: "integer" },
+          maxWeight: { type: "integer" },
+          pricePerKg: { type: "integer" },
+          images: {
+            type: "array",
+            items: { type: "string" },
+          },
+        },
+      },
+      ProductInput: {
+        type: "object",
+        required: [
+          "title_am",
+          "desc_am",
+          "title_en",
+          "desc_en",
+          "title_ru",
+          "desc_ru",
+          "minWeight",
+          "maxWeight",
+          "pricePerKg",
+          "images",
+        ],
+        properties: {
+          title_am: { type: "string" },
+          desc_am: { type: "string" },
+          title_en: { type: "string" },
+          desc_en: { type: "string" },
+          title_ru: { type: "string" },
+          desc_ru: { type: "string" },
+          minWeight: { type: "integer" },
+          maxWeight: { type: "integer" },
+          pricePerKg: { type: "integer" },
+          images: {
+            type: "array",
+            items: { type: "string" },
+          },
+        },
+      },
+      OrderItemInput: {
+        type: "object",
+        required: ["productId", "quantity", "weightGrams"],
+        properties: {
+          productId: { type: "integer" },
+          quantity: { type: "integer" },
+          weightGrams: { type: "integer" },
+        },
+      },
+      OrderCreate: {
+        type: "object",
+        required: ["customerName", "phone", "items"],
+        properties: {
+          customerName: { type: "string" },
+          phone: { type: "string" },
+          email: { type: "string", nullable: true },
+          notes: { type: "string", nullable: true },
+          items: {
+            type: "array",
+            items: { $ref: "#/components/schemas/OrderItemInput" },
+          },
+        },
+      },
+      OrderItem: {
+        type: "object",
+        properties: {
+          id: { type: "integer" },
+          productId: { type: "integer", nullable: true },
+          productTitle: { type: "string" },
+          quantity: { type: "integer" },
+          weightGrams: { type: "integer" },
+          pricePerKg: { type: "integer" },
+          lineTotal: { type: "integer" },
+        },
+      },
+      Order: {
+        type: "object",
+        properties: {
+          id: { type: "integer" },
+          customerName: { type: "string" },
+          phone: { type: "string" },
+          email: { type: "string", nullable: true },
+          notes: { type: "string", nullable: true },
+          status: { type: "string" },
+          totalAmount: { type: "integer" },
+          createdAt: { type: "string" },
+          items: {
+            type: "array",
+            items: { $ref: "#/components/schemas/OrderItem" },
+          },
+        },
+      },
+      OrderStatusUpdate: {
+        type: "object",
+        required: ["status"],
+        properties: {
+          status: {
+            type: "string",
+            enum: ["pending", "confirmed", "completed", "cancelled"],
+          },
+        },
+      },
+      Error: {
+        type: "object",
+        properties: {
+          detail: { type: "string" },
+        },
+      },
+    },
+  },
+  paths: {
+    "/api/health": {
+      get: {
+        summary: "Health check",
+        responses: {
+          200: {
+            description: "API is healthy",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    status: { type: "string" },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+    "/api/products": {
+      get: {
+        summary: "List products",
+        parameters: [
+          {
+            in: "query",
+            name: "search",
+            schema: { type: "string" },
+            required: false,
+          },
+        ],
+        responses: {
+          200: {
+            description: "Product list",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "array",
+                  items: { $ref: "#/components/schemas/Product" },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+    "/api/products/{id}": {
+      get: {
+        summary: "Get one product",
+        parameters: [
+          {
+            in: "path",
+            name: "id",
+            required: true,
+            schema: { type: "integer" },
+          },
+        ],
+        responses: {
+          200: {
+            description: "Product",
+            content: {
+              "application/json": {
+                schema: { $ref: "#/components/schemas/Product" },
+              },
+            },
+          },
+          404: {
+            description: "Product not found",
+            content: {
+              "application/json": {
+                schema: { $ref: "#/components/schemas/Error" },
+              },
+            },
+          },
+        },
+      },
+    },
+    "/api/orders": {
+      post: {
+        summary: "Create an order",
+        requestBody: {
+          required: true,
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/OrderCreate" },
+            },
+          },
+        },
+        responses: {
+          201: {
+            description: "Order created",
+            content: {
+              "application/json": {
+                schema: { $ref: "#/components/schemas/Order" },
+              },
+            },
+          },
+          400: {
+            description: "Validation error",
+            content: {
+              "application/json": {
+                schema: { $ref: "#/components/schemas/Error" },
+              },
+            },
+          },
+          404: {
+            description: "Product not found",
+            content: {
+              "application/json": {
+                schema: { $ref: "#/components/schemas/Error" },
+              },
+            },
+          },
+        },
+      },
+    },
+    "/api/admin/products": {
+      get: {
+        summary: "List products for admin",
+        responses: {
+          200: {
+            description: "Product list",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "array",
+                  items: { $ref: "#/components/schemas/Product" },
+                },
+              },
+            },
+          },
+        },
+      },
+      post: {
+        summary: "Create product",
+        requestBody: {
+          required: true,
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/ProductInput" },
+            },
+          },
+        },
+        responses: {
+          201: {
+            description: "Product created",
+            content: {
+              "application/json": {
+                schema: { $ref: "#/components/schemas/Product" },
+              },
+            },
+          },
+          400: {
+            description: "Validation error",
+            content: {
+              "application/json": {
+                schema: { $ref: "#/components/schemas/Error" },
+              },
+            },
+          },
+        },
+      },
+    },
+    "/api/admin/products/{id}": {
+      put: {
+        summary: "Update product",
+        parameters: [
+          {
+            in: "path",
+            name: "id",
+            required: true,
+            schema: { type: "integer" },
+          },
+        ],
+        requestBody: {
+          required: true,
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/ProductInput" },
+            },
+          },
+        },
+        responses: {
+          200: {
+            description: "Updated product",
+            content: {
+              "application/json": {
+                schema: { $ref: "#/components/schemas/Product" },
+              },
+            },
+          },
+          400: {
+            description: "Validation error",
+            content: {
+              "application/json": {
+                schema: { $ref: "#/components/schemas/Error" },
+              },
+            },
+          },
+          404: {
+            description: "Product not found",
+            content: {
+              "application/json": {
+                schema: { $ref: "#/components/schemas/Error" },
+              },
+            },
+          },
+        },
+      },
+      delete: {
+        summary: "Delete product",
+        parameters: [
+          {
+            in: "path",
+            name: "id",
+            required: true,
+            schema: { type: "integer" },
+          },
+        ],
+        responses: {
+          200: {
+            description: "Delete result",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    message: { type: "string" },
+                  },
+                },
+              },
+            },
+          },
+          404: {
+            description: "Product not found",
+            content: {
+              "application/json": {
+                schema: { $ref: "#/components/schemas/Error" },
+              },
+            },
+          },
+        },
+      },
+    },
+    "/api/admin/orders": {
+      get: {
+        summary: "List orders",
+        parameters: [
+          {
+            in: "query",
+            name: "status",
+            required: false,
+            schema: {
+              type: "string",
+              enum: ["pending", "confirmed", "completed", "cancelled"],
+            },
+          },
+        ],
+        responses: {
+          200: {
+            description: "Orders list",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "array",
+                  items: { $ref: "#/components/schemas/Order" },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+    "/api/admin/orders/{id}": {
+      get: {
+        summary: "Get one order",
+        parameters: [
+          {
+            in: "path",
+            name: "id",
+            required: true,
+            schema: { type: "integer" },
+          },
+        ],
+        responses: {
+          200: {
+            description: "Order",
+            content: {
+              "application/json": {
+                schema: { $ref: "#/components/schemas/Order" },
+              },
+            },
+          },
+          404: {
+            description: "Order not found",
+            content: {
+              "application/json": {
+                schema: { $ref: "#/components/schemas/Error" },
+              },
+            },
+          },
+        },
+      },
+      patch: {
+        summary: "Update order status",
+        parameters: [
+          {
+            in: "path",
+            name: "id",
+            required: true,
+            schema: { type: "integer" },
+          },
+        ],
+        requestBody: {
+          required: true,
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/OrderStatusUpdate" },
+            },
+          },
+        },
+        responses: {
+          200: {
+            description: "Updated order",
+            content: {
+              "application/json": {
+                schema: { $ref: "#/components/schemas/Order" },
+              },
+            },
+          },
+          400: {
+            description: "Invalid status",
+            content: {
+              "application/json": {
+                schema: { $ref: "#/components/schemas/Error" },
+              },
+            },
+          },
+          404: {
+            description: "Order not found",
+            content: {
+              "application/json": {
+                schema: { $ref: "#/components/schemas/Error" },
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+};
+
 const app = express();
 
 app.use(
@@ -264,6 +748,12 @@ app.use(
   }),
 );
 app.use(express.json());
+
+app.get("/openapi.json", (_req, res) => {
+  res.json(openApiDocument);
+});
+
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(openApiDocument));
 
 app.get("/api/health", (_req, res) => {
   res.json({ status: "ok" });
