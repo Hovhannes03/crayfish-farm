@@ -3,21 +3,21 @@
 This project now includes:
 
 - a React + Vite frontend
-- a Python FastAPI backend
+- a Node.js + Express backend
 - a SQLite database used as the source of truth for products and orders
 
 ## Backend
 
-Install Python dependencies:
+Install dependencies:
 
 ```bash
-python -m pip install -r requirements.txt
+npm install
 ```
 
 Run the API:
 
 ```bash
-python -m uvicorn backend.main:app --reload --app-dir .
+npm run server
 ```
 
 Available endpoints:
@@ -40,12 +40,6 @@ Products are now stored directly in the database and managed through the admin A
 Detailed endpoint docs are in [API.md](./API.md).
 
 ## Frontend
-
-Install Node dependencies:
-
-```bash
-npm install
-```
 
 Run the frontend:
 

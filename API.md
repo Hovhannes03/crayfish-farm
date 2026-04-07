@@ -6,11 +6,6 @@ Base URL for local development:
 http://127.0.0.1:8000
 ```
 
-The backend also exposes interactive FastAPI docs at:
-
-- `/docs`
-- `/redoc`
-
 ## Conventions
 
 - Request and response bodies use JSON.
