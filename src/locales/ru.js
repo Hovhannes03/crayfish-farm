@@ -2,7 +2,7 @@ const ru = {
   contacts: "Контакты",
   description: "Русское описание",
   moreInfo: "Подробнее",
-  itemsAdded: "Добав. элементы"
+  itemsAdded: "Добав элементы"
 };
 
 export default ru;

@@ -3,7 +3,6 @@ import "./header.css"
 
 export default function Navbar({open}){
 
-
     return <div className="nav">    
         <nav className={open ? "activve" : ""}>
             <ul>
@@ -12,8 +11,7 @@ export default function Navbar({open}){
                 <Link to="/blog">Blog</Link>
                 <Link to="/products">Products</Link>
                 <Link to="/systems">Systems</Link>    
-            </ul>
-                
+            </ul>  
         </nav>
     </div>
 }

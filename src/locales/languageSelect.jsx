@@ -14,12 +14,10 @@ export default function LanguageSelect({ lang, setLang }) {
 
   return (
     <div className="lang-select">
-      {/* selected */}
       <div className="selected" onClick={() => setOpen(!open)}>
-        <span>{current.flag} ▼</span>
+        <span>{current?.flag} ▼</span>
       </div>
 
-      {/* dropdown */}
       {open && (
         <div className="dropdown">
           {options.map((opt) => (
