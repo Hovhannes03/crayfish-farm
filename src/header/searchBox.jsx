@@ -1,5 +1,5 @@
 import searchPng from "../assets/search.png";
-import itemsIcon from "../assets/icon.png";
+import itemsIcon from "../assets/Icon.png";
 import userIcon from "../assets/Vector.svg";
 import "./header.css";
 import { useContext, useRef, useState } from "react";

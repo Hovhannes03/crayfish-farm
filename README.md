@@ -1,18 +1,66 @@
-# React + Vite
+# Crayfish Farm
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project now includes:
 
-Currently, two official plugins are available:
+- a React + Vite frontend
+- a Python FastAPI backend
+- a SQLite database used as the source of truth for products and orders
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Backend
 
-## React Compiler
+Install Python dependencies:
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+```bash
+python -m pip install -r requirements.txt
+```
 
-Note: This will impact Vite dev & build performances.
+Run the API:
 
-## Expanding the ESLint configuration
+```bash
+python -m uvicorn backend.main:app --reload --app-dir .
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Available endpoints:
+
+- `GET /api/health`
+- `GET /api/products`
+- `GET /api/products/{id}`
+- `POST /api/orders`
+- `GET /api/admin/products`
+- `POST /api/admin/products`
+- `PUT /api/admin/products/{id}`
+- `DELETE /api/admin/products/{id}`
+- `GET /api/admin/orders`
+- `GET /api/admin/orders/{id}`
+- `PATCH /api/admin/orders/{id}`
+
+The SQLite database file is `backend/crayfish_farm.db`.
+Products are now stored directly in the database and managed through the admin API.
+
+Detailed endpoint docs are in [API.md](./API.md).
+
+## Frontend
+
+Install Node dependencies:
+
+```bash
+npm install
+```
+
+Run the frontend:
+
+```bash
+npm run dev
+```
+
+Run frontend and backend together:
+
+```bash
+npm start
+```
+
+During local development, Vite proxies `/api` requests to `http://127.0.0.1:8000`.
+
+## Production
+
+If the frontend and backend are deployed on different origins, set `VITE_API_BASE_URL` for the frontend build so API calls point to the backend host.

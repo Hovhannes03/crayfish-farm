@@ -1,8 +1,8 @@
 const am = {
   contacts: "Կոնտակտներ",
-  description: "Հայերեն նկարագրություն",
-  moreInfo: "Ավելին",
-  itemsAdded: "Ավելացնել տարր"
+  description: "Ապրանքի նկարագրություն",
+  moreInfo: "Տեսնել ավելին",
+  itemsAdded: "Ավելացված ապրանքներ",
 };
 
 export default am;

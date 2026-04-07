@@ -5,9 +5,9 @@ export default function LanguageSelect({ lang, setLang }) {
   const [open, setOpen] = useState(false);
 
   const options = [
-    { code: "am", label: "Հայերեն", flag: "🇦🇲" },
-    { code: "ru", label: "Русский", flag: "🇷🇺" },
-    { code: "en", label: "English", flag: "🇺🇸" },
+    { code: "am", label: "Հայերեն", flag: "AM" },
+    { code: "ru", label: "Русский", flag: "RU" },
+    { code: "en", label: "English", flag: "EN" },
   ];
 
   const current = options.find((o) => o.code === lang);
@@ -15,7 +15,7 @@ export default function LanguageSelect({ lang, setLang }) {
   return (
     <div className="lang-select">
       <div className="selected" onClick={() => setOpen(!open)}>
-        <span>{current?.flag} ▼</span>
+        <span>{current?.flag} v</span>
       </div>
 
       {open && (
